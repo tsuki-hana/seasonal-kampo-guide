@@ -1,1 +1,211 @@
+{% extends "base.html" %}
 
+{% block title %}{{ disease.name }} - {{ month_jp }} - 季節病と漢方薬ガイド{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('index') }}">
+                <i data-feather="home" class="feather me-1"></i>
+                ホーム
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('month_page', month_name=month_name) }}">{{ month_jp }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ disease.name }}</li>
+    </ol>
+</nav>
+
+<!-- Disease Header -->
+<div class="disease-header mb-5">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 class="disease-title">
+                <i data-feather="thermometer" class="feather me-2"></i>
+                {{ disease.name }}
+            </h1>
+            <p class="disease-season">{{ month_jp }}によく見られる病気</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <span class="badge bg-primary fs-6">
+                {{ disease.kampo|length }}種類の漢方薬
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Disease Description -->
+<div class="disease-description-section mb-5">
+    <div class="description-card">
+        <h2 class="section-title">
+            <i data-feather="info" class="feather me-2"></i>
+            病気について
+        </h2>
+        <p class="disease-description">{{ disease.description }}</p>
+    </div>
+</div>
+
+<!-- Kampo Medicine Section -->
+<div class="kampo-section">
+    <h2 class="section-title mb-4">
+        <i data-feather="package" class="feather me-2"></i>
+        効果的な漢方薬
+    </h2>
+    
+    <div class="kampo-list">
+        {% for kampo in disease.kampo %}
+        <div class="kampo-card">
+            <div class="kampo-name">{{ kampo.name }}</div>
+            
+            <div class="kampo-effect">
+                <h5>
+                    <i data-feather="check-circle" class="feather"></i>
+                    効果・効能
+                </h5>
+                <p>{{ kampo.effect }}</p>
+            </div>
+            
+            <div class="kampo-caution">
+                <h5>
+                    <i data-feather="alert-triangle" class="feather"></i>
+                    注意点
+                </h5>
+                <p>{{ kampo.caution }}</p>
+            </div>
+            
+            <div class="kampo-usage">
+                <h5>
+                    <i data-feather="user" class="feather"></i>
+                    適用対象
+                </h5>
+                <p>{{ kampo.usage }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Important Notice -->
+<div class="important-notice mt-5">
+    <div class="notice-card">
+        <h3>
+            <i data-feather="alert-circle" class="feather me-2"></i>
+            重要なお知らせ
+        </h3>
+        <ul>
+            <li>漢方薬の使用前には必ず医師または薬剤師にご相談ください</li>
+            <li>体質や症状に応じて適切な処方が異なります</li>
+            <li>副作用や相互作用の可能性があります</li>
+            <li>妊娠中・授乳中の方は特に注意が必要です</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Related Information -->
+<div class="related-info mt-5">
+    <h2 class="section-title mb-4">
+        <i data-feather="book-open" class="feather me-2"></i>
+        関連情報
+    </h2>
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="info-card">
+                <h5>漢方薬について</h5>
+                <p>漢方薬は自然の生薬を組み合わせた伝統的な医学です。個人の体質（証）に合わせた処方が重要です。</p>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="info-card">
+                <h5>服用方法</h5>
+                <p>一般的に食前または食間の空腹時に、白湯で服用します。詳しくは処方された医師の指示に従ってください。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navigation -->
+<div class="disease-navigation text-center mt-5">
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('month_page', month_name=month_name) }}" class="btn btn-outline-primary">
+            <i data-feather="arrow-left" class="feather me-2"></i>
+            {{ month_jp }}の病気一覧
+        </a>
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+            <i data-feather="home" class="feather me-2"></i>
+            ホーム
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add styling for description card
+    const descriptionCard = document.querySelector('.description-card');
+    if (descriptionCard) {
+        descriptionCard.style.background = 'var(--bs-secondary-bg)';
+        descriptionCard.style.border = '1px solid var(--bs-border-color)';
+        descriptionCard.style.borderRadius = 'var(--border-radius)';
+        descriptionCard.style.padding = '2rem';
+        descriptionCard.style.boxShadow = 'var(--box-shadow)';
+    }
+    
+    // Add styling for notice card
+    const noticeCard = document.querySelector('.notice-card');
+    if (noticeCard) {
+        noticeCard.style.background = 'var(--bs-warning)';
+        noticeCard.style.color = 'var(--dark-color)';
+        noticeCard.style.border = '1px solid var(--warning-color)';
+        noticeCard.style.borderRadius = 'var(--border-radius)';
+        noticeCard.style.padding = '2rem';
+        noticeCard.style.borderLeft = '4px solid var(--warning-color)';
+    }
+    
+    // Add styling for info cards
+    const infoCards = document.querySelectorAll('.info-card');
+    infoCards.forEach(card => {
+        card.style.background = 'var(--bs-tertiary-bg)';
+        card.style.border = '1px solid var(--bs-border-color)';
+        card.style.borderRadius = 'var(--border-radius)';
+        card.style.padding = '1.5rem';
+        card.style.height = '100%';
+        card.style.transition = 'var(--transition)';
+        
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+    });
+    
+    // Add section title styling
+    const sectionTitles = document.querySelectorAll('.section-title');
+    sectionTitles.forEach(title => {
+        title.style.fontSize = '1.5rem';
+        title.style.fontWeight = '700';
+        title.style.color = 'var(--primary-color)';
+        title.style.borderBottom = '2px solid var(--primary-color)';
+        title.style.paddingBottom = '0.5rem';
+        title.style.marginBottom = '1.5rem';
+    });
+    
+    // Add disease title styling
+    const diseaseTitle = document.querySelector('.disease-title');
+    if (diseaseTitle) {
+        diseaseTitle.style.fontSize = '2.5rem';
+        diseaseTitle.style.fontWeight = '800';
+        diseaseTitle.style.color = 'var(--success-color)';
+        diseaseTitle.style.marginBottom = '0.5rem';
+    }
+});
+</script>
+{% endblock %}
