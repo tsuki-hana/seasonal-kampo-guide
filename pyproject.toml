@@ -1,1 +1,31 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
 
+[project]
+name = "seasonal-kampo-guide"
+version = "1.0.0"
+description = "Japanese seasonal illness and herbal medicine guide"
+authors = [
+    {name = "Tsuki-Hana", email = "tsuki-hana@example.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=2.3.0",
+    "flask-sqlalchemy>=3.0.0",
+    "gunicorn>=20.1.0",
+    "psycopg2-binary>=2.9.0",
+    "email-validator>=2.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/tsuki-hana/seasonal-kampo-guide"
+Repository = "https://github.com/tsuki-hana/seasonal-kampo-guide"
+
+[tool.setuptools]
+packages = ["seasonal_kampo_guide"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.html", "*.css", "*.js"]
