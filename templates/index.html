@@ -1,1 +1,192 @@
+{% extends "base.html" %}
 
+{% block title %}季節病と漢方薬ガイド - ホーム{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="hero-content text-center">
+        <h1 class="hero-title">季節病と漢方薬ガイド</h1>
+        <p class="hero-subtitle">
+            日本の四季に応じた病気と効果的な漢方薬の情報をお届けします。<br>
+            季節ごとの健康管理にお役立てください。
+        </p>
+    </div>
+</div>
+
+<!-- Error Message -->
+{% if error %}
+<div class="alert alert-warning" role="alert">
+    <i data-feather="alert-triangle" class="feather me-2"></i>
+    {{ error }}
+</div>
+{% endif %}
+
+<!-- Month Selection -->
+<div class="month-section">
+    <h2 class="section-title text-center mb-5">
+        <i data-feather="calendar" class="feather me-2"></i>
+        月別健康ガイド
+    </h2>
+    
+    <div class="month-grid">
+        {% for month in months %}
+        <a href="{{ url_for('month_page', month_name=month.name_en) }}" class="month-card" tabindex="0">
+            <div class="month-number">{{ month.number }}</div>
+            <div class="month-name">{{ month.name }}</div>
+            <div class="month-description">
+                {% if month.name_en == 'January' %}
+                風邪、冷え性、インフルエンザなど冬の代表的な病気について
+                {% elif month.name_en == 'February' %}
+                花粉症の始まりと乾燥肌対策について
+                {% elif month.name_en == 'March' %}
+                花粉症のピークと春の倦怠感について
+                {% elif month.name_en == 'April' %}
+                新年度のストレス性胃炎と不眠症について
+                {% elif month.name_en == 'May' %}
+                五月病と疲労感の対策について
+                {% elif month.name_en == 'June' %}
+                梅雨だるさと食中毒の予防について
+                {% elif month.name_en == 'July' %}
+                熱中症と夏バテの対策について
+                {% elif month.name_en == 'August' %}
+                猛暑対策と冷房病について
+                {% elif month.name_en == 'September' %}
+                秋バテと季節性うつの対策について
+                {% elif month.name_en == 'October' %}
+                乾燥症状と風邪の予防について
+                {% elif month.name_en == 'November' %}
+                風邪と冷え性の本格的な対策について
+                {% elif month.name_en == 'December' %}
+                年末の体調管理と胃腸炎について
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section mt-5">
+    <h2 class="section-title text-center mb-5">
+        <i data-feather="heart" class="feather me-2"></i>
+        サービスの特徴
+    </h2>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="feature-card p-4 h-100">
+                <div class="feature-icon text-center mb-3">
+                    <i data-feather="calendar" class="feather" style="width: 3rem; height: 3rem;"></i>
+                </div>
+                <h4 class="text-center mb-3">季節別ガイド</h4>
+                <p class="text-center">
+                    12か月それぞれの季節に応じた病気と漢方薬の情報を詳しく解説します。
+                </p>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="feature-card p-4 h-100">
+                <div class="feature-icon text-center mb-3">
+                    <i data-feather="book" class="feather" style="width: 3rem; height: 3rem;"></i>
+                </div>
+                <h4 class="text-center mb-3">専門的な情報</h4>
+                <p class="text-center">
+                    各漢方薬の効果、注意点、使用方法について詳しい情報を提供します。
+                </p>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="feature-card p-4 h-100">
+                <div class="feature-icon text-center mb-3">
+                    <i data-feather="shield" class="feather" style="width: 3rem; height: 3rem;"></i>
+                </div>
+                <h4 class="text-center mb-3">安全性重視</h4>
+                <p class="text-center">
+                    体質や症状に応じた適切な使用方法と注意事項を明確に記載しています。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Usage Guide -->
+<div class="usage-guide mt-5">
+    <h2 class="section-title text-center mb-4">
+        <i data-feather="help-circle" class="feather me-2"></i>
+        使い方ガイド
+    </h2>
+    
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="steps">
+                <div class="step-item d-flex align-items-center mb-4">
+                    <div class="step-number me-3">1</div>
+                    <div class="step-content">
+                        <h5>月を選択</h5>
+                        <p class="mb-0">上記のカレンダーから気になる月をクリックしてください。</p>
+                    </div>
+                </div>
+                
+                <div class="step-item d-flex align-items-center mb-4">
+                    <div class="step-number me-3">2</div>
+                    <div class="step-content">
+                        <h5>病気を確認</h5>
+                        <p class="mb-0">その月によく見られる病気の一覧をご確認ください。</p>
+                    </div>
+                </div>
+                
+                <div class="step-item d-flex align-items-center mb-4">
+                    <div class="step-number me-3">3</div>
+                    <div class="step-content">
+                        <h5>漢方薬を学習</h5>
+                        <p class="mb-0">効果的な漢方薬とその使用方法について詳しく学習できます。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add feature card styling
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach(card => {
+        card.style.background = 'var(--bs-secondary-bg)';
+        card.style.border = '1px solid var(--bs-border-color)';
+        card.style.borderRadius = 'var(--border-radius)';
+        card.style.transition = 'var(--transition)';
+        
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-4px)';
+            this.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.15)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'var(--box-shadow)';
+        });
+    });
+    
+    // Add step styling
+    const stepNumbers = document.querySelectorAll('.step-number');
+    stepNumbers.forEach(number => {
+        number.style.width = '3rem';
+        number.style.height = '3rem';
+        number.style.borderRadius = '50%';
+        number.style.background = 'var(--primary-color)';
+        number.style.color = 'white';
+        number.style.display = 'flex';
+        number.style.alignItems = 'center';
+        number.style.justifyContent = 'center';
+        number.style.fontWeight = 'bold';
+        number.style.fontSize = '1.2rem';
+    });
+});
+</script>
+{% endblock %}
